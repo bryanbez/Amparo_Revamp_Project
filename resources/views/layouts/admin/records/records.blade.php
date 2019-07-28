@@ -15,7 +15,12 @@
             </tr>
         </thead>
         <tbody>
-    
+            @foreach($fetchAllRecords as $getRecord)
+                <td> {{ $getRecord->date_request_occupy }} </td>
+                <td> {{ $getRecord->requested_group }} </td>
+                <td> {{ $getRecord->reserve_status }} </td>
+                <td> </td>
+            @endforeach
         </tbody>
     </table>
 
