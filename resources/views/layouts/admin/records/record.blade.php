@@ -14,14 +14,16 @@
                 <th>Options</th>
             </tr>
         </thead>
-        <tbody>
+
             @foreach($fetchAllRecords as $getRecord)
+            <tbody>
                 <td> {{ $getRecord->date_request_occupy }} </td>
                 <td> {{ $getRecord->requested_group }} </td>
                 <td> {{ $getRecord->reserve_status }} </td>
-                <td> </td>
+                <td><a class="btn btn-primary" href='/record/{{$getRecord->record_id}}'>View More</a></td></td>
+            </tbody>
             @endforeach
-        </tbody>
+
     </table>
 
 @endsection

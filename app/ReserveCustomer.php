@@ -13,10 +13,10 @@ class ReserveCustomer extends Model
 
         return [
             0 => 'Pending',
-            1 => 'Not Approved',
+            1 => 'Rejected',
             2 => 'Approved'
         ][$attribute];
-        
+
     }
 
     // public function gettime_request_occupyAttribute($attribute) {

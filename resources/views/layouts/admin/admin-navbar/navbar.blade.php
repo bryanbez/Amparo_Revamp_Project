@@ -5,7 +5,7 @@
         <a class="nav-link" href="/reservation">Manage Reservations</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/records"> Records </a>
+        <a class="nav-link" href="/record"> Records </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href=""> Manage Staffs </a>

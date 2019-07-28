@@ -4,7 +4,7 @@ Route::get('/', function() { return view('home'); });
 Route::get('/contactus', function() { return view('layouts.user.contactUs.frontcontactpage'); });
 Route::get('/actcalendar', function() { return view('layouts.user.calendar.actcalendar'); });
 Route::get('/about', function() { return view('layouts.user.aboutanp.aboutamparo'); });
-Route::get('/records', function() { return view('layouts.admin.records.records'); })->middleware('auth');
+Route::get('/record', function() { return view('layouts.admin.records.records'); })->middleware('auth');
 
 Auth::routes();
 
