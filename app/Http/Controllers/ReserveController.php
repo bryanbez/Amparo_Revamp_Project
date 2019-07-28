@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ReserveCustomer;
 use Illuminate\Http\Request;
+use App\Record;
 
 class ReserveController extends Controller
 {
@@ -12,6 +13,32 @@ class ReserveController extends Controller
     {
         $this->authorize('view', ReserveCustomer::class);
         $allreservation = ReserveCustomer::all();
+
+        //dd($allreservation[0]->reserve_status);
+        //  dd($value->reserve_status);
+
+        foreach ($allreservation as $key => $value) {
+            if($value->reserve_status == 'Approved' || $value->reserve_status == 'Rejected') {
+              // Move to Records
+                $addRecord = new Record();
+                $addRecord->request_form_no = $value->request_form_no;
+                $addRecord->date_request_occupy = $value->date_request_occupy;
+                $addRecord->time_request_occupy = $value->time_request_occupy;
+                $addRecord->request_use_facilities = $value->request_use_facilities;
+                $addRecord->requested_group = $value->requested_group;
+                $addRecord->requested_group_contact = $value->requested_group_contact;
+                $addRecord->requested_group_email = $value->requested_group_email;
+                $addRecord->people_count = $value->people_count;
+                $addRecord->reserve_purpose = $value->reserve_purpose;
+                $addRecord->reserve_status = $value->reserve_status;
+                $addRecord->save();
+
+                // Delete Data from reservation
+                $deleteReserve = new ReserveCustomer();
+                $deleteReserve::where('request_form_no', $value->request_form_no)->delete();
+
+            }
+        }
 
         return view('layouts.admin.manage-reservation.fetch-list', compact('allreservation'));
     }
