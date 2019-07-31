@@ -26,4 +26,6 @@
 
     </table>
 
+      {{ $fetchAllRecords->links() }}
+
 @endsection

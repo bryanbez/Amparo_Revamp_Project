@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Record;
+use App\Staff;
 use Illuminate\Http\Request;
 
-class RecordController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,9 @@ class RecordController extends Controller
      */
     public function index()
     {
-
-        $fetchAllRecords = Record::paginate(10);
-        return view('layouts.admin.records.record', compact('fetchAllRecords'));
-
+        $this->authorize('view', Staff::class);
+        $fetchStaff = Staff::where('name', '!=', 'admin')->paginate(5);
+        return view('layouts.admin.staffs.staffs-list', compact('fetchStaff', $fetchStaff));
     }
 
     /**
@@ -44,46 +43,58 @@ class RecordController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Record  $record
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function show($get_record_id)
+    public function show(Staff $staff)
     {
-        $showSpecificRecord = Record::where('record_id', $get_record_id)->get();
-        $reqfaci = unserialize($showSpecificRecord[0]->request_use_facilities);
-        return view('layouts.admin.records/viewrecord', compact('showSpecificRecord', 'reqfaci'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Record  $record
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit($staffID)
     {
-        //
+        $this->authorize('view', Staff::class);
+        $specificStaff = Staff::where('id', $staffID)->get();
+        //dd($specificStaff);
+        return view('layouts.admin.staffs.update-staff-info', compact('specificStaff', $specificStaff));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Record  $record
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Record $record)
+    public function update(Request $request, $staffID)
     {
-        //
+
+        $data = $request->validate([
+            'txt_username' => 'required',
+            'txt_email' => 'required',
+        ]);
+
+        Staff::where('id', $staffID)->update([
+            'name' => $request->txt_username,
+            'email' => $request->txt_email
+        ]);
+
+        return $this->index();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Record  $record
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy(Staff $staff)
     {
         //
     }

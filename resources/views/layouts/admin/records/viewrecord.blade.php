@@ -7,6 +7,7 @@
 
     @foreach($showSpecificRecord as $fetchspecific)
     @include('layouts.admin.records.form')
+    <a href="/record" class="btn btn-danger mt-3">Go Back</a>
     @endforeach
 
 @endsection

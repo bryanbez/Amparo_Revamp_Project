@@ -12,10 +12,7 @@ class ReserveController extends Controller
     public function index()
     {
         $this->authorize('view', ReserveCustomer::class);
-        $allreservation = ReserveCustomer::all();
-
-        //dd($allreservation[0]->reserve_status);
-        //  dd($value->reserve_status);
+        $allreservation = ReserveCustomer::paginate(10);
 
         foreach ($allreservation as $key => $value) {
             if($value->reserve_status == 'Approved' || $value->reserve_status == 'Rejected') {
@@ -84,6 +81,8 @@ class ReserveController extends Controller
 
          $saveReservation->save();
 
+         return redirect('/reserve');
+
     }
 
     public function show($request_form_no)
@@ -119,7 +118,6 @@ class ReserveController extends Controller
            'reqstatus' => 'required',
        ]);
 
-       //dd($data, $request->datereq);
         $reserveCustomer::where('request_form_no', $request_form_no)->update([
           'date_request_occupy' => $request->datereq,
           'time_request_occupy' => $request->timereq,
@@ -131,7 +129,8 @@ class ReserveController extends Controller
           'reserve_purpose' => $request->reservepurpose,
           'reserve_status' => $request->reqstatus,
         ]);
-        return redirect('/reservation');
+
+        return $this->index();
 
     }
 

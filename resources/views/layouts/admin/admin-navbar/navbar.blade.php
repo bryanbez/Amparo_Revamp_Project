@@ -8,7 +8,7 @@
         <a class="nav-link" href="/record"> Records </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href=""> Manage Staffs </a>
+        <a class="nav-link" href="/staff"> Manage Staffs </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href=""> Reports </a>

@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\ReserveCustomer' => 'App\Policies\AdminOnlyPages',
         'App\Record' => 'App\Policies\AccessRecord',
+        'App\Staff' => 'App\Policies\StaffRecords',
     ];
 
     /**
