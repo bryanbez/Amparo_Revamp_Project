@@ -9,15 +9,14 @@
 
     <title>Amparo Nature Park</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 </head>
 <body>
     <div id="app">
@@ -35,11 +34,11 @@
                     <ul class="navbar-nav mr-auto">
                     @if(Auth::check() == 'true')
                         @if(Auth::user()->name == 'admin')
-                            @include('layouts.admin.admin-navbar.navbar') 
+                            @include('layouts.admin.admin-navbar.navbar')
                         @else
                             @include('layouts.user.navbar.navbar')
-                        @endif 
-                    @else 
+                        @endif
+                    @else
                         @include('layouts.user.navbar.navbar')
                     @endif
                     </ul>
@@ -86,5 +85,9 @@
             </div>
         </main>
     </div>
+    @yield('scripts')
 </body>
+
+
+
 </html>
