@@ -10,9 +10,12 @@ Route::get('/evtcalendar', function() { return view('layouts.admin.event-calenda
 
 Auth::routes();
 
-Route::get('/reserve', 'ReserveController@create')->name('reserve.create')->middleware('auth');
+Route::get('/reserve', 'Staff\ReserveController@create')->name('reserve.create')->middleware('auth');
 
-Route::get('/evtcalendar', 'EventCalendar@index');
-Route::resource('reservation', 'ReserveController');
-Route::resource('record', 'RecordController');
-Route::resource('staff', 'StaffController');
+Route::get('/evtcalendar', 'Admin\EventCalendar@index');
+Route::get('/actcalendar', 'Staff\EventCalendar@index');
+
+
+Route::resource('reservation', 'Staff\ReserveController');
+Route::resource('record', 'Admin\RecordController');
+Route::resource('staff', 'Admin\StaffController');

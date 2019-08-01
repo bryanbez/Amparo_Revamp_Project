@@ -1,5 +1,5 @@
     <li class="nav-item">
-       <a class="nav-link" href="">Calendar</a>
+       <a class="nav-link" href="/evtcalendar">Calendar</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/reservation">Manage Reservations</a>

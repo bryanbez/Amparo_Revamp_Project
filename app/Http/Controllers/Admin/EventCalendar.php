@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Record;
 use Calendar;
 use Illuminate\Http\Request;
@@ -19,6 +20,39 @@ class EventCalendar extends Controller
          $data = Record::all();
          if($data->count()) {
              foreach ($data as $key => $value) {
+
+               if ($value->time_request_occupy == 0) {
+
+                 $events[] = Calendar::event(
+                     $value->reserve_purpose,
+                     true,
+                     new \DateTime($value->date_request_occupy),
+                     new \DateTime($value->date_request_occupy.' +1 day'),
+                     null,
+                     // Violet
+                   [
+                       'color' => '#4f0948',
+                       'url' => '/record/'.$value->record_id,
+                   ]
+                 );
+
+               } else if ($value->time_request_occupy == 1) {
+
+                 $events[] = Calendar::event(
+                     $value->reserve_purpose,
+                     true,
+                     new \DateTime($value->date_request_occupy),
+                     new \DateTime($value->date_request_occupy.' +1 day'),
+                     null,
+                     // Green
+                   [
+                       'color' => '#32a852',
+                       'url' => '/record/'.$value->record_id,
+                   ]
+                 );
+
+               } else {
+                  // Blue
                  $events[] = Calendar::event(
                      $value->reserve_purpose,
                      true,
@@ -27,10 +61,13 @@ class EventCalendar extends Controller
                      null,
                      // Add color and link on event
                    [
-                       'color' => '#f05050',
+                       'color' => '#072ded',
                        'url' => '/record/'.$value->record_id,
                    ]
                  );
+
+               }
+
              }
          }
          $calendar = Calendar::addEvents($events);
