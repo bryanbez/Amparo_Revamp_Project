@@ -24,7 +24,7 @@ class EventCalendar extends Controller
                if ($value->time_request_occupy == 0) {
 
                  $events[] = Calendar::event(
-                     $value->reserve_purpose,
+                     $value->reserve_purpose.' , '.$value->time_request_occupy,
                      true,
                      new \DateTime($value->date_request_occupy),
                      new \DateTime($value->date_request_occupy.' +1 day'),

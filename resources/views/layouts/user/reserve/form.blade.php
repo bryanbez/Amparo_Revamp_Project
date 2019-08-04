@@ -1,7 +1,7 @@
 
         <div class="pb-4">
         <label>Request Date</label>
-        <input type="date" name="datereq" value="{{ old('datereq') }}" id="" class="form-control">
+        <input type="text" name="datereq" value="{{ old('datereq') }}" id="datepicker" class="form-control">
         {{ $errors->first('datereq') }}
         <div>
         <br />
@@ -73,12 +73,50 @@
         <div>
         <br />
 
-        <!-- <div class="pb-4">
-        <label>Request Status</label>
-            <select class="form-control" value="{{ old('reqstatus') }}" name="reqstatus" id="">
-                <option value="0">Pending</option>
-                <option value="1">Not Approved</option>
-                <option value="2">Approved</option>
-            </select>
-            {{ $errors->first('reqstatus') }}
-        <div> -->
+  @section('calendar-script')
+  <script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
+  <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var dateToday = new Date();
+        var wholeDayEvent = {!! json_encode($toDataArray)  !!};
+
+        var dates = $("#datepicker").datepicker({
+          dateFormat: 'yy-mm-dd',
+          minDate: dateToday,
+          beforeShowDay: function(date){
+            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            return [wholeDayEvent.indexOf(string)  == -1];
+          },
+          onSelect: function(date) {
+            console.log(date);
+            $.ajax({
+              type: 'GET',
+              url: 'checktimeavailable/'+date,
+              success: function(message) {
+                console.log(message);
+                if(message == 'PM') {
+                  $('[name=timereq] option').filter(function() {
+                      return ($(this).text() == 'PM (1:00 PM - 7:00 PM)'); //To select Blue
+                  }).prop('selected', true);
+                  $('[name=timereq]').attr('disabled', true);
+                }
+                else if (message == 'AM') {
+                  $('[name=timereq] option').filter(function() {
+                      return ($(this).text() == 'AM (6:00 AM - 12:00 NN)'); //To select Blue
+                  }).prop('selected', true);
+                  $('[name=timereq]').attr('disabled', true);
+                } else {
+                    $('[name=timereq]').attr('disabled', false);
+                }
+
+              }
+            });
+          }
+        });
+
+
+    });
+    </script>
+  @stop

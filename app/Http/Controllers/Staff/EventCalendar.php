@@ -25,7 +25,7 @@ class EventCalendar extends Controller
         if($pendingreservation->count()) {
             foreach ($pendingreservation as $key => $value) {
                 $events[] = Calendar::event(
-                    'Pending RSRV',
+                    'Pending Reservation',
                     true,
                     new \DateTime($value->date_request_occupy),
                     new \DateTime($value->date_request_occupy.' +1 day'),
@@ -68,6 +68,12 @@ class EventCalendar extends Controller
       }
     }
 
+
+      // $calendar = Calendar::addEvents($events)->setOptions([
+      //      'selectable'  => true,
+      //  ])->setCallbacks([
+      //      'eventClick' => 'function(event) { alert("Click")}',
+      //  ]);
       $calendar = Calendar::addEvents($events);
       return view('layouts.user.calendar.calendar', compact('calendar', $calendar));
     }

@@ -1,5 +1,8 @@
 <?php
 
+
+use App\Record;
+
 Route::get('/', function() { return view('home'); });
 Route::get('/contactus', function() { return view('layouts.user.contactUs.frontcontactpage'); });
 
@@ -15,6 +18,30 @@ Route::get('/reserve', 'Staff\ReserveController@create')->name('reserve.create')
 Route::get('/evtcalendar', 'Admin\EventCalendar@index');
 Route::get('/actcalendar', 'Staff\EventCalendar@index');
 
+Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
+    $checkInRecords = Record::where('date_request_occupy', $dateGiven)->get();
+
+    foreach($checkInRecords as $key => $value) {
+      if ($value->time_request_occupy == 'AM') {
+        // PM Available
+        $status = 'PM';
+          return Response::json($status);
+      } else if ($value->time_request_occupy == 'PM') {
+        $status = 'AM';
+          return Response::json($status);
+      } else {
+        return Response::json('Vakante');
+      }
+    }
+
+
+});
+
+
+// Route::get('/links/{link_id?}', function ($link_id) {
+//     $link = Link::find($link_id);
+//     return Response::json($link);
+// });
 
 Route::resource('reservation', 'Staff\ReserveController');
 Route::resource('record', 'Admin\RecordController');

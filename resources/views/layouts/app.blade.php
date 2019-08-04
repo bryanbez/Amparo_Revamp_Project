@@ -15,7 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> -->
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}">
 </head>
 <body>
@@ -88,6 +89,7 @@
         </main>
     </div>
     @yield('scripts')
+    @yield('calendar-script')
 </body>
 
 

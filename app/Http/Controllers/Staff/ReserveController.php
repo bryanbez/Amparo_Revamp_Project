@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 
 use App\ReserveCustomer;
-use Illuminate\Http\Request;
 use App\Record;
+use Illuminate\Http\Request;
+
 
 class ReserveController extends Controller
 {
@@ -44,7 +45,20 @@ class ReserveController extends Controller
 
     public function create()
     {
-        return view('layouts.user.reserve.create');
+        // Whole Day
+        $showDateReserved = Record::select('date_request_occupy')->where('time_request_occupy', 2)->get();
+        $toDataArray = array();
+        foreach($showDateReserved as $value) {
+          $toDataArray[] = $value->date_request_occupy;
+        }
+        //AM
+        $showAmReserve = Record::select('date_request_occupy')->where('time_request_occupy', 0)->get();
+        $amDateArray = array();
+        foreach($showAmReserve as $value) {
+          $amDateArray[] = $value->date_request_occupy;
+        }
+
+        return view('layouts.user.reserve.create', compact('toDataArray', 'amDateArray'));
     }
 
     // public function validateInputs() {
@@ -68,20 +82,21 @@ class ReserveController extends Controller
              // 'reqstatus' => 'required',
          ]);
 
-        $saveReservation = new ReserveCustomer();
-        $saveReservation->request_form_no = rand(4, 8);
-        $saveReservation->date_request_occupy = $request->datereq;
-        $saveReservation->time_request_occupy = $request->timereq;
-        // $saveReservation->request_use_facilities = implode(",", $request->reqfaci);
-        $saveReservation->request_use_facilities = serialize($request->reqfaci);
-        $saveReservation->requested_group = $request->groupname;
-        $saveReservation->requested_group_contact = $request->groupcontact;
-        $saveReservation->requested_group_email = $request->groupemail;
-        $saveReservation->people_count = $request->peoplecount;
-        $saveReservation->reserve_purpose = $request->reservepurpose;
-        $saveReservation->reserve_status = 0;
-
-         $saveReservation->save();
+        $checkIfAlreadyReserved = ReserveCustomer::where('date_request_occupy', $request->datereq)->get();
+        dd($checkIfAlreadyReserved);
+        // $saveReservation = new ReserveCustomer();
+        // $saveReservation->request_form_no = rand(4, 8);
+        // $saveReservation->date_request_occupy = $request->datereq;
+        // $saveReservation->time_request_occupy = $request->timereq;
+        // $saveReservation->request_use_facilities = serialize($request->reqfaci);
+        // $saveReservation->requested_group = $request->groupname;
+        // $saveReservation->requested_group_contact = $request->groupcontact;
+        // $saveReservation->requested_group_email = $request->groupemail;
+        // $saveReservation->people_count = $request->peoplecount;
+        // $saveReservation->reserve_purpose = $request->reservepurpose;
+        // $saveReservation->reserve_status = 0;
+        //
+        //  $saveReservation->save();
 
          return redirect('/reserve');
 

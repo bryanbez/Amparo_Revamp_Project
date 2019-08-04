@@ -1,0 +1,5 @@
+.highlighted a{
+   background-color : green !important;
+   background-image :none !important;
+   color: white !important;
+}
