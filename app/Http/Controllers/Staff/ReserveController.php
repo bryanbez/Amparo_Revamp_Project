@@ -14,51 +14,46 @@ class ReserveController extends Controller
 
     public function index()
     {
-        $this->authorize('view', ReserveCustomer::class);
-        $allreservation = ReserveCustomer::paginate(10);
+
+        $allreservation = ReserveCustomer::all();
 
         foreach ($allreservation as $key => $value) {
-            if($value->reserve_status == 'Approved' || $value->reserve_status == 'Rejected') {
-              // Move to Records
-                $addRecord = new Record();
-                $addRecord->request_form_no = $value->request_form_no;
-                $addRecord->date_request_occupy = $value->date_request_occupy;
-                $addRecord->time_request_occupy = $value->time_request_occupy;
-                $addRecord->request_use_facilities = $value->request_use_facilities;
-                $addRecord->requested_group = $value->requested_group;
-                $addRecord->requested_group_contact = $value->requested_group_contact;
-                $addRecord->requested_group_email = $value->requested_group_email;
-                $addRecord->people_count = $value->people_count;
-                $addRecord->reserve_purpose = $value->reserve_purpose;
-                $addRecord->reserve_status = $value->reserve_status;
-                $addRecord->save();
+           if ($value->date_request_occupy < date('Y-m-d')) {
+             // Insert in records
+             $transferToRecords = new Record();
+             $transferToRecords->request_form_no = $value->request_form_no;
+             $transferToRecords->date_request_occupy = $value->date_request_occupy;
+             $transferToRecords->time_request_occupy = $value->time_request_occupy;
+             $transferToRecords->request_use_facilities = $value->request_use_facilities;
+             $transferToRecords->requested_group = $value->requested_group;
+             $transferToRecords->requested_group_contact = $value->requested_group_contact;
+             $transferToRecords->requested_group_email = $value->requested_group_email;
+             $transferToRecords->people_count = $value->people_count;
+             $transferToRecords->reserve_purpose = $value->reserve_purpose;
+             $transferToRecords->reserve_status = $value->reserve_status;
+             $transferToRecords->save();
+             // Delete in reservation
+             $deleteInReservation = ReserveCustomer::where('date_request_occupy', $value->date_request_occupy)->delete();
 
-                // Delete Data from reservation
-                $deleteReserve = new ReserveCustomer();
-                $deleteReserve::where('request_form_no', $value->request_form_no)->delete();
-
-            }
+           }
         }
-
         return view('layouts.admin.manage-reservation.fetch-list', compact('allreservation'));
     }
 
     public function create()
     {
+        $this->authorize('create', ReserveCustomer::class);
         // Whole Day
-        $showDateReserved = Record::select('date_request_occupy')->where('time_request_occupy', 2)->get();
+        $showDateReserved = ReserveCustomer::select('date_request_occupy')->where('time_request_occupy', 2)->get();
         $toDataArray = array();
         foreach($showDateReserved as $value) {
           $toDataArray[] = $value->date_request_occupy;
         }
-        //AM
-        $showAmReserve = Record::select('date_request_occupy')->where('time_request_occupy', 0)->get();
-        $amDateArray = array();
-        foreach($showAmReserve as $value) {
-          $amDateArray[] = $value->date_request_occupy;
+        $checkAmPmDate = ReserveCustomer::select('date_request_occupy')->groupBy('date_request_occupy')->havingRaw('count(date_request_occupy) > 1')->get();
+        foreach($checkAmPmDate as $value) {
+          $toDataArray[] = $value->date_request_occupy;
         }
-
-        return view('layouts.user.reserve.create', compact('toDataArray', 'amDateArray'));
+        return view('layouts.user.reserve.create', compact('toDataArray'));
     }
 
     // public function validateInputs() {
@@ -82,21 +77,19 @@ class ReserveController extends Controller
              // 'reqstatus' => 'required',
          ]);
 
-        $checkIfAlreadyReserved = ReserveCustomer::where('date_request_occupy', $request->datereq)->get();
-        dd($checkIfAlreadyReserved);
-        // $saveReservation = new ReserveCustomer();
-        // $saveReservation->request_form_no = rand(4, 8);
-        // $saveReservation->date_request_occupy = $request->datereq;
-        // $saveReservation->time_request_occupy = $request->timereq;
-        // $saveReservation->request_use_facilities = serialize($request->reqfaci);
-        // $saveReservation->requested_group = $request->groupname;
-        // $saveReservation->requested_group_contact = $request->groupcontact;
-        // $saveReservation->requested_group_email = $request->groupemail;
-        // $saveReservation->people_count = $request->peoplecount;
-        // $saveReservation->reserve_purpose = $request->reservepurpose;
-        // $saveReservation->reserve_status = 0;
-        //
-        //  $saveReservation->save();
+        $saveReservation = new ReserveCustomer();
+        $saveReservation->request_form_no = rand(10000, 1000000);
+        $saveReservation->date_request_occupy = $request->datereq;
+        $saveReservation->time_request_occupy = $request->timereq;
+        $saveReservation->request_use_facilities = serialize($request->reqfaci);
+        $saveReservation->requested_group = $request->groupname;
+        $saveReservation->requested_group_contact = $request->groupcontact;
+        $saveReservation->requested_group_email = $request->groupemail;
+        $saveReservation->people_count = $request->peoplecount;
+        $saveReservation->reserve_purpose = $request->reservepurpose;
+        $saveReservation->reserve_status = 0;
+
+         $saveReservation->save();
 
          return redirect('/reserve');
 

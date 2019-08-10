@@ -89,9 +89,8 @@
         <div class="pb-4">
         <label>Request Status</label>
             <select class="form-control" name="reqstatus" id="">
-                <option value="0" {{ $fetchspecific->reserve_status == 0 ? 'selected' : ''}}>Pending</option>
-                <option value="1" {{ $fetchspecific->reserve_status == 1 ? 'selected' : ''}}>Rejected</option>
-                <option value="2" {{ $fetchspecific->reserve_status == 2 ? 'selected' : ''}}>Approved</option>
+                <option value="0" {{ $fetchspecific->reserve_status == 0 ? 'selected' : ''}}>Approved</option>
+                <option value="1" {{ $fetchspecific->reserve_status == 1 ? 'selected' : ''}}>Cancelled</option>
             </select>
 
         <div>

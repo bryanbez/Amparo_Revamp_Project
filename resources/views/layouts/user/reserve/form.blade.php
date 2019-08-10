@@ -9,9 +9,7 @@
         <div class="pb-4">
         <label>Request Time</label>
             <select class="form-control" value="{{ old('timereq') }}" name="timereq" id="">
-                <option value="0">AM (6:00 AM - 12:00 NN)</option>
-                <option value="1">PM (1:00 PM - 7:00 PM)</option>
-                <option value="2">Whole Day (8:00 AM - 6:00 PM)</option>
+
             </select>
             {{ $errors->first('timreq') }}
         <div>
@@ -81,6 +79,7 @@
 
         var dateToday = new Date();
         var wholeDayEvent = {!! json_encode($toDataArray)  !!};
+        console.log(wholeDayEvent);
 
         var dates = $("#datepicker").datepicker({
           dateFormat: 'yy-mm-dd',
@@ -97,18 +96,16 @@
               success: function(message) {
                 console.log(message);
                 if(message == 'PM') {
-                  $('[name=timereq] option').filter(function() {
-                      return ($(this).text() == 'PM (1:00 PM - 7:00 PM)'); //To select Blue
-                  }).prop('selected', true);
-                  $('[name=timereq]').attr('disabled', true);
+                    $('[name=timereq]').empty();
+                    $('[name=timereq]').append('<option value="0">AM (6:00 AM - 12:00 NN)</option>');
                 }
                 else if (message == 'AM') {
-                  $('[name=timereq] option').filter(function() {
-                      return ($(this).text() == 'AM (6:00 AM - 12:00 NN)'); //To select Blue
-                  }).prop('selected', true);
-                  $('[name=timereq]').attr('disabled', true);
+                    $('[name=timereq]').empty();
+                    $('[name=timereq]').append('<option value="1">PM (1:00 PM - 7:00 PM)</option>');
                 } else {
-                    $('[name=timereq]').attr('disabled', false);
+                    $('[name=timereq]').empty();
+                    $('[name=timereq]').append('<option value="0">AM (6:00 AM - 12:00 NN)</option> <option value="1">PM (1:00 PM - 7:00 PM)</option> <option value="2">Whole Day (8:00 AM - 6:00 PM)</option>');
+
                 }
 
               }

@@ -6,7 +6,7 @@ use App\User;
 use App\ReserveCustomer;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AdminOnlyPages
+class ReservePolicy
 {
     use HandlesAuthorization;
 
@@ -17,11 +17,9 @@ class AdminOnlyPages
      * @param  \App\ReserveCustomer  $reserveCustomer
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, ReserveCustomer $reserveCustomer)
     {
-        return in_array($user->email, [
-            'admin@gmail.com',	
-        ]);
+        //
     }
 
     /**
@@ -32,7 +30,15 @@ class AdminOnlyPages
      */
     public function create(User $user)
     {
-        //
+
+      if($user->name == 'admin') {
+        // Not Allowed
+        return false;
+      }
+      else {
+        return true;
+      }
+
     }
 
     /**

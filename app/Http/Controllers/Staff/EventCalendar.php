@@ -19,23 +19,7 @@ class EventCalendar extends Controller
     {
       $events = [];
 
-      $pendingreservation = ReserveCustomer::all();
-      // I cannot join the record and reservation tables because they are not related.
-
-        if($pendingreservation->count()) {
-            foreach ($pendingreservation as $key => $value) {
-                $events[] = Calendar::event(
-                    'Pending Reservation',
-                    true,
-                    new \DateTime($value->date_request_occupy),
-                    new \DateTime($value->date_request_occupy.' +1 day'),
-                    null,
-                  ['color' => '#615b06', 'url' => '#' ]
-                );
-            }
-          }
-
-      $data = Record::all();
+      $data = ReserveCustomer::all();
       if($data->count()) {
           foreach ($data as $key => $value) {
 

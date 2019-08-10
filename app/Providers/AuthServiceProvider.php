@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\ReserveCustomer' => 'App\Policies\AdminOnlyPages',
+        'App\ReserveCustomer' => 'App\Policies\ReservePolicy',
         'App\Record' => 'App\Policies\AccessRecord',
         'App\Staff' => 'App\Policies\StaffRecords',
     ];

@@ -17,7 +17,7 @@ class RecordController extends Controller
     public function index()
     {
 
-        $fetchAllRecords = Record::paginate(10);
+        $fetchAllRecords = Record::orderBy('date_request_occupy', 'DESC')->paginate(10);
         return view('layouts.admin.records.record', compact('fetchAllRecords'));
 
     }

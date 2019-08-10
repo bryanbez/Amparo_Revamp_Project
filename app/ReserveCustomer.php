@@ -10,11 +10,9 @@ class ReserveCustomer extends Model
     protected $guarded = [];
 
     public function getReserveStatusAttribute($attribute) {
-
         return [
-            0 => 'Pending',
-            1 => 'Rejected',
-            2 => 'Approved'
+            0 => 'Approved',
+            1 => 'Cancelled',
         ][$attribute];
 
     }
