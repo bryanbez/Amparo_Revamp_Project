@@ -11,5 +11,5 @@
         <a class="nav-link" href="/staff"> Manage Staffs </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href=""> Reports </a>
+        <a class="nav-link" href="/reports"> Reports </a>
     </li>

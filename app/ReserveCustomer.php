@@ -17,6 +17,14 @@ class ReserveCustomer extends Model
 
     }
 
+    public function getTimeRequestOccupyAttribute($attribute) {
+      return [
+        0 => 'AM',
+        1 => 'PM',
+        2 => 'Whole Day'
+      ][$attribute];
+    }
+
     // public function gettime_request_occupyAttribute($attribute) {
     //
     //     return [

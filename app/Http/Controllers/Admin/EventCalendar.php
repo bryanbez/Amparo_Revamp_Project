@@ -22,7 +22,7 @@ class EventCalendar extends Controller
              foreach ($data as $key => $value) {
 
                  $events[] = Calendar::event(
-                     $value->reserve_purpose.' , '.$value->time_request_occupy,
+                     $value->reserve_purpose.' ('.$value->time_request_occupy.')',
                      true,
                      new \DateTime($value->date_request_occupy),
                      new \DateTime($value->date_request_occupy.' +1 day'),
@@ -30,7 +30,7 @@ class EventCalendar extends Controller
                      // Violet
                    [
                        'color' => '#4f0948',
-                       'url' => '/reserve/'.$value->request_form_no,
+                       'url' => '/reservation/'.$value->request_form_no,
                    ]
                  );
 
