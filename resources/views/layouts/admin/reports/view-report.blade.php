@@ -7,16 +7,27 @@
 
 <div class="row">
 
-  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <div class="card">
         <div class="card-header">
           Total Reservations
         </div>
         <div class="card-body">
-          <h1 class="card-text">0000</h1>
+          <h1 class="card-text">{{ $totalCount }}</h1>
         </div>
       </div>
     </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="card">
+          <div class="card-header">
+            Upcoming Events
+          </div>
+          <div class="card-body">
+            <h1 class="card-text">{{ $getTotalUpcoming }}</h1>
+          </div>
+        </div>
+      </div>
 </div>
 
 <hr />
@@ -29,7 +40,7 @@
           Total Reservations in this Day
         </div>
         <div class="card-body">
-          <h1 class="card-text">0000</h1>
+          <h1 class="card-text">{{ $getTodayReservation }}</h1>
         </div>
       </div>
     </div>
@@ -40,7 +51,7 @@
           Total Reservations in this Month
         </div>
         <div class="card-body">
-          <h1 class="card-text">0000</h1>
+          <h1 class="card-text">{{ $getThisMonthReservation }}</h1>
         </div>
       </div>
     </div>
@@ -51,7 +62,7 @@
           Total Reservations in this Year
         </div>
         <div class="card-body">
-          <h1 class="card-text">0000</h1>
+          <h1 class="card-text">{{ $getThisYearReservation }}</h1>
         </div>
       </div>
     </div>
@@ -69,7 +80,7 @@
           Done Events
         </div>
         <div class="card-body">
-          <h1 class="card-text">0000</h1>
+          <h1 class="card-text">{{ $getDoneEvents }}</h1>
         </div>
       </div>
     </div>
@@ -80,7 +91,7 @@
             Cancelled Events
           </div>
           <div class="card-body">
-            <h1 class="card-text">0000</h1>
+            <h1 class="card-text">{{ $getCancelledEvents }}</h1>
           </div>
         </div>
       </div>

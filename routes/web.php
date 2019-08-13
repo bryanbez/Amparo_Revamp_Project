@@ -41,8 +41,10 @@ Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
 
 });
 
-
 Route::resource('reservation', 'Staff\ReserveController');
 Route::resource('record', 'Admin\RecordController');
 Route::resource('staff', 'Admin\StaffController');
 Route::resource('reports', 'Admin\ReportController')->middleware('accessreports');
+
+
+Route::get('/reports', 'Admin\ReportController@displayUpcomingReservation');
