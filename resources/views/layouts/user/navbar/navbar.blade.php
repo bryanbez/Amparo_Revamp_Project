@@ -5,9 +5,3 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('reserve.create') }}">Reserve</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/contactus"> Contact Us</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/about">About</a>
-    </li>

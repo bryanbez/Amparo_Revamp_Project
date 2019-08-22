@@ -1,8 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
 
-<h2> Reports </h2>
+<h1> Dashboard </h1>
     <br />
 
 <div class="row">
@@ -110,5 +108,3 @@
   </div>
 
 </div>
-
-@endsection

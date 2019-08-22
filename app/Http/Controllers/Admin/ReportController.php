@@ -11,9 +11,9 @@ use Carbon\Carbon;
 class ReportController extends Controller
 {
 
-    public function index() {
-      return view('layouts.admin.reports.view-report');
-    }
+    // public function index() {
+    //   return view('layouts.admin.reports.view-report');
+    // }
 
     public function displayTotalReservation() {
 
@@ -32,7 +32,7 @@ class ReportController extends Controller
      $getallCurrReservation = ReserveCustomer::all()->count();
      $getallRecords = Record::all()->count();
      $totalCount = $getallCurrReservation + $getallRecords;
-      return view('layouts.admin.reports.view-report', compact('getTotalUpcoming', 'getTodayReservation', 'getThisMonthReservation', 'getThisYearReservation', 'getDoneEvents', 'getCancelledEvents', 'totalCount'));
+      return view('home', compact('getTotalUpcoming', 'getTodayReservation', 'getThisMonthReservation', 'getThisYearReservation', 'getDoneEvents', 'getCancelledEvents', 'totalCount'));
     }
 
 }

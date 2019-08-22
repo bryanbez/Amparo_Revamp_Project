@@ -18,7 +18,7 @@ class ReserveController extends Controller
         $allreservation = ReserveCustomer::all();
 
         foreach ($allreservation as $key => $value) {
-           if ($value->date_request_occupy < date('Y-m-d')) {
+           if ($value->date_request_occupy < date('Y-m-d') || $value->reserve_status == 'Cancelled') {
              // Insert in records
              $transferToRecords = new Record();
              $transferToRecords->request_form_no = $value->request_form_no;

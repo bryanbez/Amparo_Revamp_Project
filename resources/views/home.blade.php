@@ -2,8 +2,16 @@
 
 @section('content')
 <div class="container">
-    <h1>Amparo Nature Park Homepage</h1>
 
-    
+    @if(Auth::check() == 'true')
+        @if(Auth::user()->name == 'admin')
+            @include('layouts.admin.reports.view-report')
+        @else
+
+        @endif
+    @else
+
+    @endif
+
 </div>
 @endsection

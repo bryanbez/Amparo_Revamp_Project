@@ -40,7 +40,7 @@
                             @include('layouts.user.navbar.navbar')
                         @endif
                     @else
-                        @include('layouts.user.navbar.navbar')
+                      
                     @endif
                     </ul>
 
