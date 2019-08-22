@@ -7,7 +7,7 @@
         @if(Auth::user()->name == 'admin')
             @include('layouts.admin.reports.view-report')
         @else
-
+            @include('layouts.user.homepage.homepage')
         @endif
     @else
 

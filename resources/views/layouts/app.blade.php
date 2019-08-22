@@ -40,7 +40,7 @@
                             @include('layouts.user.navbar.navbar')
                         @endif
                     @else
-                      
+
                     @endif
                     </ul>
 
@@ -84,6 +84,13 @@
 
         <main class="py-4">
             <div class="container">
+
+              @if(session()->has('reserve-message'))
+              <div class="alert alert-success" role="alert">
+                  <strong>{{ session()->get('reserve-message') }}</strong>
+              </div>
+              @endif
+        
                 @yield('content')
             </div>
         </main>

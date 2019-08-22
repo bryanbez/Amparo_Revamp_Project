@@ -15,7 +15,9 @@ Route::get('/evtcalendar', function() { return view('layouts.admin.event-calenda
 Route::get('/reserve', 'Staff\ReserveController@create')->name('reserve.create')->middleware('auth');
 Route::get('/evtcalendar', 'Admin\EventCalendar@index');
 Route::get('/actcalendar', 'Staff\EventCalendar@index');
-Route::get('/', 'Admin\ReportController@displayUpcomingReservation')->middleware('auth');
+Route::get('/', 'Admin\ReportController@displayAllRecords')->middleware('auth');
+//Route::get('/', 'Admin\ReportController@showUpcomingEventsinStaff')->middleware('auth');
+
 
 Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
 

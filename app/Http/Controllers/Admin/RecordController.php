@@ -53,6 +53,7 @@ class RecordController extends Controller
     {
         $showSpecificRecord = Record::where('record_id', $get_record_id)->get();
         $reqfaci = unserialize($showSpecificRecord[0]->request_use_facilities);
+        //dd($showSpecificRecord);
         return view('layouts.admin.records/viewrecord', compact('showSpecificRecord', 'reqfaci'));
     }
 

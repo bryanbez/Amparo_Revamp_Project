@@ -91,7 +91,7 @@ class ReserveController extends Controller
 
          $saveReservation->save();
 
-         return redirect('/reserve');
+         return redirect('/reserve')->with('reserve-message', 'Successfully Reserved');
 
     }
 

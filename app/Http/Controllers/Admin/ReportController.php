@@ -11,15 +11,7 @@ use Carbon\Carbon;
 class ReportController extends Controller
 {
 
-    // public function index() {
-    //   return view('layouts.admin.reports.view-report');
-    // }
-
-    public function displayTotalReservation() {
-
-    }
-
-    public function displayUpcomingReservation() {
+    public function displayAllRecords() {
       $getTotalUpcoming = ReserveCustomer::all()->count();
       $getTodayReservation = ReserveCustomer::whereDate('created_at', '=', Carbon::now()->toDateString())->count();
       $getThisMonthReservation = ReserveCustomer::whereMonth('created_at', '=', Carbon::now()->month)->count();
@@ -29,10 +21,16 @@ class ReportController extends Controller
       $getCancelledEvents = Record::where('reserve_status', 'Cancelled')->count();
      //dd($getThisYearReservation);
 
-     $getallCurrReservation = ReserveCustomer::all()->count();
-     $getallRecords = Record::all()->count();
-     $totalCount = $getallCurrReservation + $getallRecords;
-      return view('home', compact('getTotalUpcoming', 'getTodayReservation', 'getThisMonthReservation', 'getThisYearReservation', 'getDoneEvents', 'getCancelledEvents', 'totalCount'));
+       $getallCurrReservation = ReserveCustomer::all()->count();
+       $getallRecords = Record::all()->count();
+       $totalCount = $getallCurrReservation + $getallRecords;
+
+      $dateToday = Carbon::now()->toDateString();
+
+      $getUpcomingEvent = ReserveCustomer::orderBy('date_request_occupy')->skip(0)->take(5)->get();
+
+      return view('home', compact('getTotalUpcoming', 'getTodayReservation', 'getThisMonthReservation', 'getThisYearReservation', 'getDoneEvents', 'getCancelledEvents', 'totalCount', 'dateToday', 'getUpcomingEvent'));
     }
+
 
 }
