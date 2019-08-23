@@ -17,9 +17,11 @@ class ReservePolicy
      * @param  \App\ReserveCustomer  $reserveCustomer
      * @return mixed
      */
-    public function view(User $user, ReserveCustomer $reserveCustomer)
+    public function view(User $user)
     {
-        //
+      return in_array($user->email, [
+          'admin@gmail.com',
+      ]);
     }
 
     /**

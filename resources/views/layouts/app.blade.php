@@ -16,6 +16,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('fontawesome-web/css/all.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}">
 </head>
@@ -23,8 +24,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                Amparo Nature Park
+                <a class="navbar-brand" style="padding-top: 0px;" href="{{ url('/') }}">
+                <img src="{{ asset('img/anpp.png') }}" style="height: 100px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -49,7 +50,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}"> {{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
@@ -90,11 +91,14 @@
                   <strong>{{ session()->get('reserve-message') }}</strong>
               </div>
               @endif
-        
+
                 @yield('content')
             </div>
         </main>
     </div>
+    <script type="text/javascript" src="{{ asset('fontawesome-web/js/all.js') }}">
+
+    </script>
     @yield('scripts')
     @yield('calendar-script')
 </body>

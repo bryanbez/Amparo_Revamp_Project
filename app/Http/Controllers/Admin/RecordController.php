@@ -16,7 +16,7 @@ class RecordController extends Controller
      */
     public function index()
     {
-
+        $this->authorize('AdminOnlyAccess', Record::class);
         $fetchAllRecords = Record::orderBy('date_request_occupy', 'DESC')->paginate(10);
         return view('layouts.admin.records.record', compact('fetchAllRecords'));
 
@@ -51,6 +51,7 @@ class RecordController extends Controller
      */
     public function show($get_record_id)
     {
+        $this->authorize('AdminOnlyAccess', Record::class);
         $showSpecificRecord = Record::where('record_id', $get_record_id)->get();
         $reqfaci = unserialize($showSpecificRecord[0]->request_use_facilities);
         //dd($showSpecificRecord);

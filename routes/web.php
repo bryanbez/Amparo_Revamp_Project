@@ -2,10 +2,12 @@
 
 
 use App\ReserveCustomer;
+use App\User;
 
 Auth::routes();
 
 Route::get('/', function() { return view('login'); });
+
 
 Route::get('/contactus', function() { return view('layouts.user.contactUs.frontcontactpage'); });
 Route::get('/about', function() { return view('layouts.user.aboutanp.aboutamparo'); });

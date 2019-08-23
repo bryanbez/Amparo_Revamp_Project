@@ -1,7 +1,7 @@
 
-   <li class="nav-item active">
-       <a class="nav-link" href="/actcalendar">Calendar</a>
+   <li class="{{ Request::is('actcalendar') ? 'active' : ''}}">
+       <a class="nav-link" href="/actcalendar"><i class="fa fa-calendar"></i> Calendar</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('reserve.create') }}">Reserve</a>
+    <li class="{{ Request::is('reserve') ? 'active' : ''}}">
+        <a class="nav-link" href="{{ route('reserve.create') }}"><i class="fa fa-plus"></i> Reserve</a>
     </li>

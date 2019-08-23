@@ -13,7 +13,7 @@
         @include('layouts.admin.manage-reservation.form')
 
         <button type="submit" class="btn btn-primary mt-3" name="updatereservation">Update Reservation</button>
-        <button href="/reservation" class="btn btn-danger mt-3" name="return">Go Back</button>
+        <a href="{{ url()->previous() }}" class="btn btn-danger mt-3" name="return">Go Back</a>
         @csrf
     </form>
 

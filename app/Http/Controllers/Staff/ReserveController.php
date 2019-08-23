@@ -14,9 +14,8 @@ class ReserveController extends Controller
 
     public function index()
     {
-
+        $this->authorize('view', ReserveCustomer::class);
         $allreservation = ReserveCustomer::all();
-
         foreach ($allreservation as $key => $value) {
            if ($value->date_request_occupy < date('Y-m-d')) {
              // Insert in records
@@ -63,7 +62,7 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
-
+        $this->authorize('AdminOnlyAccess', ReserveCustomer::class);
         $data = $request->validate([
             // 'reqformno' => 'required',
              'datereq' => 'required',
@@ -97,6 +96,7 @@ class ReserveController extends Controller
 
     public function show($request_form_no)
     {
+        $this->authorize('view', ReserveCustomer::class);
         $showspecificreservation = ReserveCustomer::where('request_form_no', $request_form_no)->get();
         $reqfaci = unserialize($showspecificreservation[0]->request_use_facilities);
         return view('layouts.admin.manage-reservation.view-more', compact('showspecificreservation', 'reqfaci'));
@@ -106,16 +106,17 @@ class ReserveController extends Controller
 
     public function edit($request_form_no)
     {
+      $this->authorize('view', ReserveCustomer::class);
       $showspecificreservation = ReserveCustomer::where('request_form_no', $request_form_no)->get();
       $reqfaci = unserialize($showspecificreservation[0]->request_use_facilities);
-    
+
       return view('layouts.admin.manage-reservation.edit-reservation', compact('showspecificreservation', 'reqfaci'));
   //  dd($showspecificreservation);
     }
 
     public function update(Request $request, ReserveCustomer $reserveCustomer, $request_form_no)
     {
-
+      $this->authorize('AdminOnlyAccess', ReserveCustomer::class);
       $data = $request->validate([
            // 'reqformno' => 'required',
            'datereq' => 'required',
@@ -139,6 +140,7 @@ class ReserveController extends Controller
           'people_count' => $request->peoplecount,
           'reserve_purpose' => $request->reservepurpose,
           'reserve_status' => $request->reqstatus,
+          'updated_at' => date('Y-m-d G:i:s')
         ]);
 
         return $this->index();
