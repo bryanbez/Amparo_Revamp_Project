@@ -18,7 +18,7 @@ class ReserveController extends Controller
         $allreservation = ReserveCustomer::all();
 
         foreach ($allreservation as $key => $value) {
-           if ($value->date_request_occupy < date('Y-m-d') || $value->reserve_status == 'Cancelled') {
+           if ($value->date_request_occupy < date('Y-m-d')) {
              // Insert in records
              $transferToRecords = new Record();
              $transferToRecords->request_form_no = $value->request_form_no;
@@ -108,6 +108,7 @@ class ReserveController extends Controller
     {
       $showspecificreservation = ReserveCustomer::where('request_form_no', $request_form_no)->get();
       $reqfaci = unserialize($showspecificreservation[0]->request_use_facilities);
+    
       return view('layouts.admin.manage-reservation.edit-reservation', compact('showspecificreservation', 'reqfaci'));
   //  dd($showspecificreservation);
     }
