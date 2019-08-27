@@ -19,7 +19,7 @@ class ReserveController extends Controller
     {
         $this->authorize('view', ReserveCustomer::class);
 
-        $allreservation = ReserveCustomer::paginate(10);
+        $allreservation = ReserveCustomer::orderBy('created_at')->paginate(10);
 
         foreach ($allreservation as $key => $value) {
            if ($value->date_request_occupy < date('Y-m-d')) {
@@ -131,7 +131,7 @@ class ReserveController extends Controller
 
         $allreservation = ReserveCustomer::where('requested_group', 'LIKE', '%'.$searchText.'%')
               ->orderBy('created_at', 'DESC')
-              ->paginate(5);
+              ->paginate(10);
 
         return view('layouts.admin.manage-reservation.fetch-list', compact('allreservation', 'searchText'));
 

@@ -98,14 +98,20 @@
 <hr />
 
 <div class="row">
-  <div class="col-xl-12">
-    <button class="btn btn-primary" type="button" name="button">Print All Reports</button>
-    <hr />
+
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <a href="/reportPDFUpcoming" class="btn btn-primary" type="button" name="button">Export Upcoming Events This Month</a>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <a href="/reportPDFDone" class="btn btn-primary" type="button" name="button">Export Done Events </a>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <a href="/reportPDFReserve" class="btn btn-primary" type="button" name="button">Export Reservation Lists</a>
   </div>
 
-
-
   <div class="col-sm-12 col-md-12 col-lg-12">
+    <hr />
+    <br />
     <h2>Recently Updated Reservations</h2>
       @foreach($getUpdatedRecordsinReservation as $fetchUpdatedRecordsinReservation)
         <div class="card text-white bg-info mb-3">

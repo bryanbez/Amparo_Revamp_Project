@@ -20,7 +20,13 @@ Route::get('/evtcalendar', 'Admin\EventCalendar@index');
 Route::get('/actcalendar', 'Staff\EventCalendar@index');
 Route::get('/', 'Admin\ReportController@displayAllRecords')->middleware('auth');
 
+Route::get('/searchrecords', 'Admin\RecordController@search');
 Route::get('/searchreservation', 'Staff\ReserveController@search');
+
+Route::get('/reportPDFUpcoming', 'Admin\ReportController@generateUpcomingReport');
+Route::get('/reportPDFDone', 'Admin\ReportController@generateDoneEventsReport');
+Route::get('/reportPDFReserve', 'Admin\ReportController@generateReservationList');
+
 
 
 Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
@@ -46,7 +52,6 @@ Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
 });
 
 Route::resource('reservation', 'Staff\ReserveController');
-
 Route::resource('record', 'Admin\RecordController');
 Route::resource('staff', 'Admin\StaffController');
 Route::resource('reports', 'Admin\ReportController')->middleware('accessreports');

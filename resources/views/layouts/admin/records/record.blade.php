@@ -2,8 +2,21 @@
 
 @section('content')
 
+<br />
 <h2> Records </h2>
-    <br />
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+      <form action="/searchrecords" method="GET">
+          <input class="form-control" type="text" name="searchText" placeholder="Search">
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      @csrf
+    </div>
+</div>
+<br />
 
     <table class="table">
         <thead>
@@ -26,6 +39,6 @@
 
     </table>
 
-      {{ $fetchAllRecords->links() }}
+    {{ $fetchAllRecords->appends(request()->input())->links() }}
 
 @endsection
