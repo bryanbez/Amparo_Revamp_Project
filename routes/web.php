@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Mail;
 Auth::routes();
 
 Route::get('/', function() { return view('login'); });
-
 Route::get('/contactus', function() { return view('layouts.user.contactUs.frontcontactpage'); });
 Route::get('/about', function() { return view('layouts.user.aboutanp.aboutamparo'); });
 Route::get('/record', function() { return view('layouts.admin.records.records'); })->middleware('auth');
@@ -20,7 +19,8 @@ Route::get('/reserve', 'Staff\ReserveController@create')->name('reserve.create')
 Route::get('/evtcalendar', 'Admin\EventCalendar@index');
 Route::get('/actcalendar', 'Staff\EventCalendar@index');
 Route::get('/', 'Admin\ReportController@displayAllRecords')->middleware('auth');
-//Route::get('/', 'Admin\ReportController@showUpcomingEventsinStaff')->middleware('auth');
+
+Route::get('/searchreservation', 'Staff\ReserveController@search');
 
 
 Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
@@ -46,6 +46,7 @@ Route::get('checktimeavailable/{dateGiven}', function ($dateGiven){
 });
 
 Route::resource('reservation', 'Staff\ReserveController');
+
 Route::resource('record', 'Admin\RecordController');
 Route::resource('staff', 'Admin\StaffController');
 Route::resource('reports', 'Admin\ReportController')->middleware('accessreports');

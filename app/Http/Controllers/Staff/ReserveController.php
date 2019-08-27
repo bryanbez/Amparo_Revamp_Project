@@ -18,7 +18,9 @@ class ReserveController extends Controller
     public function index()
     {
         $this->authorize('view', ReserveCustomer::class);
-        $allreservation = ReserveCustomer::all();
+
+        $allreservation = ReserveCustomer::paginate(10);
+
         foreach ($allreservation as $key => $value) {
            if ($value->date_request_occupy < date('Y-m-d')) {
              // Insert in records
@@ -106,6 +108,7 @@ class ReserveController extends Controller
         $saveReservation->save();
 
         Mail::to('sample@mail.com')->send(new ReservationCopyScheuleInfo($data, $requse));
+
         return redirect('/reserve')->with('reserve-message', 'Successfully Reserved');
 
     }
@@ -119,6 +122,21 @@ class ReserveController extends Controller
 
     }
 
+    public function search(Request $request) {
+
+        $data = $request->validate([
+           'searchText' => 'required',
+        ]);
+
+        $searchText = trim($request->searchText);
+
+        $allreservation = ReserveCustomer::where('requested_group', 'LIKE', '%'.$searchText.'%')
+              ->orderBy('created_at', 'DESC')
+              ->paginate(5);
+
+        return view('layouts.admin.manage-reservation.fetch-list', compact('allreservation', 'searchText'));
+
+    }
 
     public function edit($request_form_no)
     {
