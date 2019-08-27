@@ -108,7 +108,6 @@ class ReserveController extends Controller
         $saveReservation->save();
 
         Mail::to('sample@mail.com')->send(new ReservationCopyScheuleInfo($data, $requse));
-
         return redirect('/reserve')->with('reserve-message', 'Successfully Reserved');
 
     }
