@@ -1,4 +1,6 @@
 
+        <input type="hidden" name="reqformno" value="<?php $gen_rand_id = rand(10000, 1000000); echo $gen_rand_id; ?>" class="form-control">
+
         <div class="pb-4">
         <label>Request Date</label>
         <input type="text" name="datereq" value="{{ old('datereq') }}" id="datepicker" class="form-control">

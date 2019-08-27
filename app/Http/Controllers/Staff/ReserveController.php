@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 
+use App\Mail\ReservationCopyScheuleInfo;
 use App\ReserveCustomer;
 use App\Record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class ReserveController extends Controller
@@ -62,9 +65,9 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('AdminOnlyAccess', ReserveCustomer::class);
+
         $data = $request->validate([
-            // 'reqformno' => 'required',
+             'reqformno' => 'required',
              'datereq' => 'required',
              'timereq' => 'required',
              'reqfaci' => 'required',
@@ -73,11 +76,23 @@ class ReserveController extends Controller
              'groupemail' => 'required',
              'peoplecount' => 'required',
              'reservepurpose' => 'required',
-             // 'reqstatus' => 'required',
+            // 'reqstatus' => 'required',
          ]);
 
+        $reqfacicheck = $request->reqfaci;
+        $requse = [];
+         foreach ($reqfacicheck as $key => $value) {
+            if ($value == 0) {
+              array_push($requse, 'Private Room');
+            } elseif($value == 1) {
+              array_push($requse, 'Function Room');
+            } elseif($value == 2) {
+              array_push($requse, 'Poolside');
+            }
+         }
+
         $saveReservation = new ReserveCustomer();
-        $saveReservation->request_form_no = rand(10000, 1000000);
+        $saveReservation->request_form_no = $request->reqformno;
         $saveReservation->date_request_occupy = $request->datereq;
         $saveReservation->time_request_occupy = $request->timereq;
         $saveReservation->request_use_facilities = serialize($request->reqfaci);
@@ -88,9 +103,10 @@ class ReserveController extends Controller
         $saveReservation->reserve_purpose = $request->reservepurpose;
         $saveReservation->reserve_status = 0;
 
-         $saveReservation->save();
+        $saveReservation->save();
 
-         return redirect('/reserve')->with('reserve-message', 'Successfully Reserved');
+        Mail::to('sample@mail.com')->send(new ReservationCopyScheuleInfo($data, $requse));
+        return redirect('/reserve')->with('reserve-message', 'Successfully Reserved');
 
     }
 
