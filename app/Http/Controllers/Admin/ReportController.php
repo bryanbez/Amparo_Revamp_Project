@@ -23,7 +23,8 @@ class ReportController extends Controller
       $getallRecords = Record::all()->count();
       $totalCount = $getallCurrReservation + $getallRecords;
       $dateToday = Carbon::now()->toDateString();
-      $getUpcomingEvent = ReserveCustomer::orderBy('date_request_occupy')->skip(0)->take(3)->get();
+      //$getUpcomingEvent = ReserveCustomer::orderBy('date_request_occupy')->skip(0)->take(3)->get();
+      $getUpcomingEvent = ReserveCustomer::where('date_request_occupy', '>', Carbon::now()->toDateString())->orderBy('date_request_occupy')->skip(0)->take(3)->get();
       $getUpdatedRecordsinReservation = ReserveCustomer::orderBy('updated_at', 'DESC')->skip(0)->take(3)->get();
       $getTodayEventOnGoing = ReserveCustomer::whereDate('date_request_occupy', '=', Carbon::now()->toDateString())->get();
     //  dd($getTodayEventOnGoing);
